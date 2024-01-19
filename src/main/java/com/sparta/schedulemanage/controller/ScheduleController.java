@@ -29,23 +29,23 @@ public class ScheduleController {
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto requestDto){
         return scheduleService.createSchedule(requestDto);
     }
-//    @GetMapping("/schedule/{id}")
-//    public List<ScheduleResponseDto> getScheduleById(@PathVariable Long id){
-//        return scheduleService.getScheduleById(id);
-//    }
-//
-//    @GetMapping("/schedule")
-//    public List<ScheduleResponseDto> getSchedule(){
-//        return scheduleService.getSchedule();
-//    }
-//
-//    @PutMapping("/schedule/{id}")
-//    public void updateSchedule(@PathVariable Long id){
-//        scheduleService.updateSchedule();
-//    }
-//
-//    @DeleteMapping("/schedule")
-//    public void removeSchedule(){
-//        scheduleService.removeSchedule();
-//    }
+    @GetMapping("/schedule")
+    public List<ScheduleResponseDto> getSchedule(){
+        return scheduleService.getSchedule();
+    }
+    @GetMapping("/schedule/{id}")
+    public ScheduleResponseDto getScheduleById(@PathVariable Long id){
+        return scheduleService.getScheduleById(id);
+    }
+
+
+    @PutMapping("/schedule/{id}")
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
+        return scheduleService.updateSchedule(id,requestDto);
+    }
+
+    @DeleteMapping("/schedule/{id}")
+    public String removeSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
+        return scheduleService.removeSchedule(id, requestDto);
+    }
 }
