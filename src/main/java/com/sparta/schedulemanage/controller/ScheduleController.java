@@ -5,6 +5,7 @@ import com.sparta.schedulemanage.dto.ScheduleResponseDto;
 import com.sparta.schedulemanage.entity.Schedule;
 import com.sparta.schedulemanage.service.ScheduleService;
 import java.util.List;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,10 +40,9 @@ public class ScheduleController {
         return scheduleService.getScheduleById(id);
     }
 
-
     @PutMapping("/schedule/{id}")
-    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
-        return scheduleService.updateSchedule(id,requestDto);
+    public void updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto){
+        scheduleService.updateSchedule(id,requestDto);
     }
 
     @DeleteMapping("/schedule/{id}")
