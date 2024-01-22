@@ -40,6 +40,7 @@ public class Schedule extends TimeStamped {
         this.password = scheduleRequestDto.getPassword();
     }
 
+
     public void update(ScheduleRequestDto requestDto){
         this.title = requestDto.getTitle();
         this.contents = requestDto.getContents();

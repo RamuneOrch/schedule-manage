@@ -1,5 +1,6 @@
 package com.sparta.schedulemanage.service;
 
+import com.sparta.schedulemanage.Exception.ScheduleNotFoundException;
 import com.sparta.schedulemanage.dto.ScheduleRequestDto;
 import com.sparta.schedulemanage.dto.ScheduleResponseDto;
 import com.sparta.schedulemanage.entity.Schedule;
@@ -19,6 +20,14 @@ public class ScheduleService {
         this.scheduleRepository = scheduleRepository;
     }
 
+//    public ResponseEntity<Schedule> createSchedule(ScheduleRequestDto requestDto) {
+//
+//        Schedule schedule = new Schedule(requestDto);
+//        // DB 저장
+//        scheduleRepository.save(schedule);
+//        return new ResponseEntity<>(schedule, HttpStatus.NOT_FOUND);
+//    }
+
     public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto) {
 
         Schedule schedule = new Schedule(requestDto);
@@ -27,21 +36,23 @@ public class ScheduleService {
         return new ScheduleResponseDto(schedule);
     }
 
+
     public List<ScheduleResponseDto> getSchedule() {
         return scheduleRepository.findAllByOrderByCreatedAtDesc().stream().map(ScheduleResponseDto::new).toList();
     }
 
     public ScheduleResponseDto getScheduleById(Long id) {
         Schedule schedule = scheduleRepository.findById(id).orElseThrow(() ->
-                new IllegalArgumentException("선택한 일정은 존재하지 않습니다.")
+                new ScheduleNotFoundException(String.format("id: %s는 존재하지 않습니다.",id))
         );
         return new ScheduleResponseDto(schedule);
     }
 
+
     @Transactional
     public ScheduleResponseDto updateSchedule(Long id, ScheduleRequestDto requestDto) {
         Schedule schedule = new Schedule(requestDto);
-        Schedule beforeSchedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 일정은 존재하지 않습니다."));
+        Schedule beforeSchedule = scheduleRepository.findById(id).orElseThrow(() -> new ScheduleNotFoundException("선택한 일정은 존재하지 않습니다."));
         return validatePassword(schedule, beforeSchedule, requestDto);
     }
 
@@ -50,22 +61,22 @@ public class ScheduleService {
             beforeSchedule.update(requestDto);
             return new ScheduleResponseDto(beforeSchedule);
         }else{
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+            throw new ScheduleNotFoundException("비밀번호가 일치하지 않습니다");
         }
     }
 
     public String removeSchedule(Long id, ScheduleRequestDto requestDto) {
         Schedule schedule = new Schedule(requestDto);
-        Schedule beforeSchedule = scheduleRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("선택한 일정은 존재하지 않습니다."));
-        return validatePasswordDelete(schedule,beforeSchedule,requestDto);
+        Schedule beforeSchedule = scheduleRepository.findById(id).orElseThrow(() -> new ScheduleNotFoundException(String.format("id: %s는 존재하지 않습니다.",id)));
+        return validatePasswordDelete(schedule,beforeSchedule);
     }
 
-    public String validatePasswordDelete(Schedule schedule, Schedule beforeSchedule, ScheduleRequestDto requestDto){
+    public String validatePasswordDelete(Schedule schedule, Schedule beforeSchedule){
         if(schedule.getPassword().equals(beforeSchedule.getPassword())){
             scheduleRepository.delete(beforeSchedule);
             return "삭제되었습니다.";
         }else{
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
+            throw new ScheduleNotFoundException("비밀번호가 일치하지 않습니다");
         }
     }
 }
