@@ -40,10 +40,9 @@ public class ScheduleController {
         return scheduleService.getScheduleById(id);
     }
 
-
     @PutMapping("/schedule/{id}")
-    public void updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
-        scheduleService.updateSchedule(id, requestDto);
+    public ScheduleResponseDto updateSchedule(@PathVariable Long id, @RequestBody ScheduleRequestDto requestDto) {
+        return scheduleService.updateSchedule(id, requestDto);
     }
 
     @DeleteMapping("/schedule/{id}")

@@ -1,6 +1,7 @@
 package com.sparta.schedulemanage.service;
 
 import com.sparta.schedulemanage.Exception.ScheduleNotFoundException;
+import com.sparta.schedulemanage.Exception.SchedulePasswordErrorException;
 import com.sparta.schedulemanage.dto.ScheduleRequestDto;
 import com.sparta.schedulemanage.dto.ScheduleResponseDto;
 import com.sparta.schedulemanage.entity.Schedule;
@@ -19,14 +20,6 @@ public class ScheduleService {
     public ScheduleService(ScheduleRepository scheduleRepository) {
         this.scheduleRepository = scheduleRepository;
     }
-
-//    public ResponseEntity<Schedule> createSchedule(ScheduleRequestDto requestDto) {
-//
-//        Schedule schedule = new Schedule(requestDto);
-//        // DB 저장
-//        scheduleRepository.save(schedule);
-//        return new ResponseEntity<>(schedule, HttpStatus.NOT_FOUND);
-//    }
 
     public ScheduleResponseDto createSchedule(ScheduleRequestDto requestDto) {
 
@@ -76,7 +69,7 @@ public class ScheduleService {
             scheduleRepository.delete(beforeSchedule);
             return "삭제되었습니다.";
         }else{
-            throw new ScheduleNotFoundException("비밀번호가 일치하지 않습니다");
+            throw new SchedulePasswordErrorException("비밀번호가 일치하지 않습니다");
         }
     }
 }
