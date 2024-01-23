@@ -7,7 +7,26 @@
 
 ## api 명세서
 
-![image](https://github.com/RamuneOrch/schedule-manage/assets/65538799/b7e47e62-fc56-49b5-935c-70b35aa78e33)
+- 일정 작성 ( POST )
+- 일정을 작성합니다.
+![image](https://github.com/RamuneOrch/schedule-manage/assets/65538799/fee73ce2-27e1-4d48-b619-a0678554a06a)
+
+- 선택한 일정 조회 ( GET )
+- uri parameter로 넘어온 값을 기준으로 일정을 조회합니다.
+![image](https://github.com/RamuneOrch/schedule-manage/assets/65538799/88fccfd2-ebd0-45ef-8701-552ee94f8e78)
+
+- 전체 일정 조회 ( GET )
+- 작성된 전체 일정을 조회합니다.
+![image](https://github.com/RamuneOrch/schedule-manage/assets/65538799/e67c156f-2cdd-4506-b563-c2e0b34a03aa)
+
+- 일정 수정 ( PUT )
+- uri parameter로 넘어온 값과 request 값으로 선택된 일정을 수정합니다.
+![image](https://github.com/RamuneOrch/schedule-manage/assets/65538799/a35d135c-7e2e-4f07-a785-9ead13966026)
+
+- 선택한 일정 삭제 ( DELETE )
+- uri parameter로 넘어온 값을 기준으로 일정을 삭제합니다.
+![image](https://github.com/RamuneOrch/schedule-manage/assets/65538799/5ca28fa2-c423-467d-8dba-f60f38dfbec4)
+
 
 
 ## ERD
